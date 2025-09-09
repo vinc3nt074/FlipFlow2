@@ -1,0 +1,1 @@
+localStorage.setItem('ff_email','test@example.com');location='dashboard.html'

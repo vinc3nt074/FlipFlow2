@@ -1,0 +1,24 @@
+<!doctype html>
+<title>FlipFlow Diagnose</title>
+<meta charset="utf-8">
+<script>window.API_URL="https://script.google.com/macros/s/AKfycbztC8FG-GYBAGBmlvjpVqhxJB2MQYaMv6z7akpmJY4IkPzf0xficmYvea2nZIjIp0kM2g/exec";</script>
+<pre id="out">Bereit. Klicke den Button.</pre>
+<button id="btn">POST testen</button>
+<script>
+btn.onclick = async () => {
+  out.textContent = "Sende ...";
+  try {
+    const res = await fetch(window.API_URL, {
+      method: "POST",
+      headers: {"Content-Type":"text/plain;charset=utf-8"},
+      body: JSON.stringify({productName:"Diagnose",category:"Elektronik",targetPrice:1,description:"",email:"diagnose@example.com"})
+    });
+    const headers = {}; res.headers.forEach((v,k)=>headers[k]=v);
+    const ct = (headers['content-type']||'').toLowerCase();
+    const body = ct.includes('application/json') ? await res.json() : await res.text();
+    out.textContent = JSON.stringify({status:res.status, ok:res.ok, headers, body}, null, 2);
+  } catch(e) {
+    out.textContent = "Fetch-Fehler: " + e.message;
+  }
+};
+</script>
